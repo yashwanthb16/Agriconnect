@@ -1,10 +1,9 @@
+import Carousel from '../Carousel/Carousel';
+
 function Hero() {
   return (
-    <section>
-      <h1>Empowering Farmers</h1>
-      <p>One platform for all farming needs.</p>
-
-      <button>Get Started</button>
+    <section className="w-full">
+      <Carousel />
     </section>
   );
 }
