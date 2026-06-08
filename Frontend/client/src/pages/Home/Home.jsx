@@ -2,7 +2,7 @@ import Navbar from "../../components/Navbar/Navbar";
 import Hero from "../../components/Hero/Hero";
 import StatCard from "../../components/StatCard/StatCard";
 import Footer from "../../components/Footer/Footer.jsx";
-import Carousel from "../../components/Carousel/Carousel";
+
 
 function Home() {
   return (
@@ -26,7 +26,7 @@ function Home() {
           </div>
 
           {/* Stats Grid */}
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-6">
         <StatCard
           title="Registered Farmers"
           value="12,458+"
@@ -68,7 +68,6 @@ function Home() {
             </svg>
           }
         />
-
         <StatCard
           title="Organic Waste Offers"
           value="2,345+"
@@ -78,7 +77,10 @@ function Home() {
             </svg>
           }
         />
-          </div>
+      </div>
+
+        
+          
         </div>
       </section>
 
