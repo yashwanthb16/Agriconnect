@@ -1,6 +1,5 @@
 import { Link } from 'react-router-dom';
 import { useState } from 'react';
-
 function Footer() {
   const [email, setEmail] = useState('');
   const [subscribed, setSubscribed] = useState(false);
