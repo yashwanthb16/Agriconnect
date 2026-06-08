@@ -4,7 +4,7 @@ import StatCard from "../../components/StatCard/StatCard";
 
 function Home() {
   return (
-    <main className="home-page">
+    <>
       <Navbar />
 
       <Hero />
@@ -29,15 +29,8 @@ function Home() {
           title="Transport Requests"
           value="568+"
         />
-
-        <StatCard
-          title="Organic Waste Offers"
-          value="2,345+"
-          />
       </div>
-
-      <Footer />    
-    </main>
+    </>
   );
 }
 
