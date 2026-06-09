@@ -5,7 +5,7 @@ function Carousel() {
 
   const slides = [
     {
-      image: 'https://images.unsplash.com/photo-1574943320219-553eb22ea631?w=1920&q=80',
+      image: 'https://plus.unsplash.com/premium_photo-1664301163726-78773dc77bfd?q=80&w=1074&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
       title: 'Modern Tractor Ploughing',
       subtitle: 'Advanced rotavator and tractor equipment for efficient soil preparation',
       badge: '🚜 Equipment',
@@ -41,7 +41,7 @@ function Carousel() {
       badge: '🌿 Planting',
     },
     {
-      image: 'https://images.unsplash.com/photo-1530857842417-5e12a7f6b5ec?w=1920&q=80',
+      image: 'https://plus.unsplash.com/premium_photo-1661962692059-55d5a4319814?q=80&w=1074&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
       title: 'Organic Farming',
       subtitle: 'Sustainable organic practices for eco-friendly agriculture',
       badge: '🍃 Organic',
