@@ -8,10 +8,21 @@ function Navbar() {
       </Link>
 
       <ul className="flex gap-6 list-none">
-        <li className="text-gray-700 hover:text-green-600 cursor-pointer font-medium">Home</li>
-        <li className="text-gray-700 hover:text-green-600 cursor-pointer font-medium">Marketplace</li>
-        <li className="text-gray-700 hover:text-green-600 cursor-pointer font-medium">Services</li>
-        <li className="text-gray-700 hover:text-green-600 cursor-pointer font-medium">Schemes</li>
+        <li className="text-gray-700 hover:text-green-600 cursor-pointer font-medium">
+          <Link to="/">Home</Link>
+        </li>
+        <li className="text-gray-700 hover:text-green-600 cursor-pointer font-medium">
+          <Link to="/marketplace">Marketplace</Link>
+        </li>
+        <li className="text-gray-700 hover:text-green-600 cursor-pointer font-medium">
+          <Link to="/services">Services</Link>
+        </li>
+        <li className="text-gray-700 hover:text-green-600 cursor-pointer font-medium">
+          <Link to="/schemes">Schemes</Link>
+        </li>
+        <li className="text-gray-700 hover:text-green-600 cursor-pointer font-medium">
+          <Link to="/transport-dashboard">Transport Dashboard</Link>
+        </li>
       </ul>
 
       <Link to="/login">
@@ -19,6 +30,7 @@ function Navbar() {
           Login
         </button>
       </Link>
+
     </nav>
   );
 }

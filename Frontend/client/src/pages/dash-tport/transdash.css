@@ -1,0 +1,13 @@
+:root {
+  --olive: #556b2f;
+  --olive-dark: #3d4a1e;
+  --olive-light: #8fa94a;
+  --olive-faint: #f0f3e0;
+  --olive-pale: #d4de9a;
+}
+
+.bg-olive { background-color: #556b2f; }
+.bg-olive-dark { background-color: #3d4a1e; }
+.bg-olive-light { background-color: #8fa94a; }
+.bg-olive-faint { background-color: #f0f3e0; }
+.bg-olive-pale { background-color: #d4de9a; }
