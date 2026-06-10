@@ -1,6 +1,8 @@
+import { Link } from 'react-router-dom';
 import Navbar from "../../components/Navbar/Navbar";
 import Hero from "../../components/Hero/Hero";
 import StatCard from "../../components/StatCard/StatCard";
+import TransportRegistrationBar from "../../components/translink/TransportRegistrationBar";
 import Footer from "../../components/Footer/Footer.jsx";
 
 
@@ -82,6 +84,12 @@ function Home() {
 
         
           
+        </div>
+      </section>
+
+      <section className="py-16 bg-white">
+        <div className="max-w-7xl mx-auto px-6">
+          <TransportRegistrationBar />
         </div>
       </section>
 
