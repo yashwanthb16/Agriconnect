@@ -26,7 +26,7 @@ function Home() {
             </p>
             <div className="mt-4 w-24 h-1 bg-gradient-to-r from-green-500 to-green-600 rounded-full mx-auto"></div>
           </div>
-          <FeaturedProducts />
+          
 
           {/* Stats Grid */}
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-6">

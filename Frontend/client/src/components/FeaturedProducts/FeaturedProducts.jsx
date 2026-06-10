@@ -1,5 +1,7 @@
 // src/components/FeaturedProducts/FeaturedProducts.jsx
 
+import { Link } from "react-router-dom";
+
 function FeaturedProducts() {
   const products = [
     {
@@ -34,20 +36,26 @@ function FeaturedProducts() {
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         {products.map((product) => (
-          <div
-            key={product.id}
-            className="bg-white rounded-xl shadow-lg overflow-hidden"
-          >
+          <div key={product.id} className="border rounded-lg p-4 shadow">
             <img
               src={product.image}
               alt={product.name}
-              className="w-full h-56 object-cover"
+              className="w-full h-48 object-cover rounded"
             />
 
-            <div className="p-4">
-              <h3 className="text-xl font-semibold">{product.name}</h3>
-              <p className="text-green-600 font-medium">{product.price}</p>
-              <p className="text-gray-500">{product.location}</p>
+            <h3 className="text-xl font-bold mt-2">{product.name}</h3>
+            <p>{product.price}</p>
+            <p>{product.location}</p>
+
+            <div className="flex gap-2 mt-4">
+              <Link
+                to={`/product/${product.id}`}
+                className="bg-green-600 text-white px-4 py-2 rounded"
+              >
+                View Details
+              </Link>
+
+              
             </div>
           </div>
         ))}
