@@ -5,6 +5,12 @@ import StatCard from "../../components/StatCard/StatCard";
 import TransportRegistrationBar from "../../components/translink/TransportRegistrationBar";
 import Footer from "../../components/Footer/Footer.jsx";
 
+import FeaturedProducts from "../../components/FeaturedProducts/FeaturedProducts"
+
+
+
+import Carousel from "../../components/Carousel/Carousel";
+import { Link } from "react-router-dom";
 
 function Home() {
   return (
@@ -12,6 +18,13 @@ function Home() {
       <Navbar />
 
       <Hero />
+
+      
+
+
+      <Link to="/register">
+<button>Register</button>
+</Link>
 
       {/* Statistics Section */}
       <section className="py-16 bg-gradient-to-br from-gray-50 to-green-50">
@@ -26,6 +39,7 @@ function Home() {
             </p>
             <div className="mt-4 w-24 h-1 bg-gradient-to-r from-green-500 to-green-600 rounded-full mx-auto"></div>
           </div>
+          
 
           {/* Stats Grid */}
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-6">
