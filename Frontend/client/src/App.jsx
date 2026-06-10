@@ -3,6 +3,9 @@ import Home from './pages/Home/Home';
 import Login from './pages/Login/Login';
 
 import TransportDashboard from './pages/dash-tport/transdash';
+import Marketplace from "./pages/Marketplace/Marketplace";
+import ProductDetails from "./pages/ProductDetails/ProductDetails";
+
 
 import Register from './pages/Register';
 
@@ -12,15 +15,20 @@ function App() {
       <Routes>
 
         <Route path="/" element={<Home />} />
+        <Route path="/marketplace" element={<Marketplace />} />
+
+
 
         <Route path="/login" element={<Login />} />
 
         <Route path="/transport-dashboard" element={<TransportDashboard/>}/>
 
+        <Route path="/product/:id" element={<ProductDetails />} />
+
 
         <Route path="/register" element={<Register />} />
 
- d36d978 (Completed register page changes)
+ 
       </Routes>
     </Router>
   );
