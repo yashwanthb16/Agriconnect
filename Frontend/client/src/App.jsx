@@ -1,10 +1,13 @@
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import React from "react";
 import Home from './pages/Home/Home';
 import Login from './pages/Login/Login';
 
 import TransportDashboard from './pages/dash-tport/transdash';
 import Marketplace from "./pages/Marketplace/Marketplace";
 import ProductDetails from "./pages/ProductDetails/ProductDetails";
+import Booktransport from "./pages/dash-tport/booktransport.jsx";
+
 
 
 import Register from './pages/Register';
@@ -27,6 +30,7 @@ function App() {
 
 
         <Route path="/register" element={<Register />} />
+            <Route path="/book-transport" element={<Booktransport/>}/>
 
  
       </Routes>
