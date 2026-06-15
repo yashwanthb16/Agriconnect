@@ -486,7 +486,7 @@ const TransportDashboard = () => {
       <nav className="bg-slate-900 h-14 flex items-center justify-between px-6 border-b-2 border-teal-600">
         <div className="flex items-center gap-3">
           <div className="w-9 h-9 bg-teal-600 rounded-lg flex items-center justify-center text-white">🚕</div>
-          <div><div className="text-white text-sm font-semibold">Safar ka saathi</div></div>
+          <div><div className="text-white text-sm font-semibold">AgriMove Driver Onboarding</div></div>
         </div>
         <div className="border border-teal-700 bg-slate-800 text-teal-300 text-xs px-3 py-1.5 rounded-full">Secure Portal</div>
       </nav>
