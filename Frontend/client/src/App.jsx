@@ -3,6 +3,7 @@ import Home from './pages/Home/Home';
 import Login from './pages/Login/Login';
 
 import TransportDashboard from './pages/dash-tport/transdash';
+import TransportBooking from './pages/dash-tport/transportbooking';
 import Marketplace from "./pages/Marketplace/Marketplace";
 import ProductDetails from "./pages/ProductDetails/ProductDetails";
 
@@ -22,6 +23,7 @@ function App() {
         <Route path="/login" element={<Login />} />
 
         <Route path="/transport-dashboard" element={<TransportDashboard/>}/>
+        <Route path="/book-transport" element={<TransportBooking/>}/>
 
         <Route path="/product/:id" element={<ProductDetails />} />
 
