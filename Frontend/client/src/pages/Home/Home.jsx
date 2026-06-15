@@ -2,9 +2,9 @@ import { Link } from 'react-router-dom';
 import Navbar from "../../components/Navbar/Navbar";
 import Hero from "../../components/Hero/Hero";
 import StatCard from "../../components/StatCard/StatCard";
-import TransportServicesSection from "../../components/translink/TransportServiceSection";
-import Footer from "../../components/Footer/Footer.jsx";
 
+import Footer from "../../components/Footer/Footer.jsx";
+import TransportServicesSection from "../../components/translink/TransportServicesSection";
 import FeaturedProducts from "../../components/FeaturedProducts/FeaturedProducts"
 
 
@@ -100,11 +100,7 @@ function Home() {
         </div>
       </section>
 
-      <section className="py-16 bg-white">
-        <div className="max-w-7xl mx-auto px-6">
-          <TransportServicesSection />
-        </div>
-      </section>
+      <TransportServicesSection />      
 
       <Footer />
     </>
