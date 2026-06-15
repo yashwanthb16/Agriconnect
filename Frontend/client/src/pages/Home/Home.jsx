@@ -2,7 +2,7 @@ import { Link } from 'react-router-dom';
 import Navbar from "../../components/Navbar/Navbar";
 import Hero from "../../components/Hero/Hero";
 import StatCard from "../../components/StatCard/StatCard";
-import TransportRegistrationBar from "../../components/translink/TransportRegistrationBar";
+import TransportServicesSection from "../../components/translink/TransportServiceSection";
 import Footer from "../../components/Footer/Footer.jsx";
 
 import FeaturedProducts from "../../components/FeaturedProducts/FeaturedProducts"
@@ -10,7 +10,6 @@ import FeaturedProducts from "../../components/FeaturedProducts/FeaturedProducts
 
 
 import Carousel from "../../components/Carousel/Carousel";
-import { Link } from "react-router-dom";
 
 function Home() {
   return (
@@ -103,7 +102,7 @@ function Home() {
 
       <section className="py-16 bg-white">
         <div className="max-w-7xl mx-auto px-6">
-          <TransportRegistrationBar />
+          <TransportServicesSection />
         </div>
       </section>
 
