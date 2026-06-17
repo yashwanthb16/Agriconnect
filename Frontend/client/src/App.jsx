@@ -6,7 +6,9 @@ import TransportDashboard from './pages/dash-tport/transdash';
 import TransportBooking from './pages/dash-tport/transportbooking';
 import Marketplace from "./pages/Marketplace/Marketplace";
 import ProductDetails from "./pages/ProductDetails/ProductDetails";
+import AddRental from "./pages/AddRental/AddRental";
 import SchemeDetails from "./pages/SchemeDetails/SchemeDetails";
+
 
 import Register from './pages/Register';
 
@@ -24,7 +26,7 @@ function App() {
 
         <Route path="/transport-dashboard" element={<TransportDashboard/>}/>
         <Route path="/book-transport" element={<TransportBooking/>}/>
-
+        <Route path="/add-rental" element={<AddRental />} />
         <Route path="/product/:id" element={<ProductDetails />} />
         <Route path="/schemes/:id" element={<SchemeDetails />} />
 
