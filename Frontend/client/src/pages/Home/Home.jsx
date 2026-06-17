@@ -1,4 +1,3 @@
-import { Link } from 'react-router-dom';
 import Navbar from "../../components/Navbar/Navbar";
 import Hero from "../../components/Hero/Hero";
 import StatCard from "../../components/StatCard/StatCard";
@@ -17,13 +16,6 @@ function Home() {
       <Navbar />
 
       <Hero />
-
-      
-
-
-      <Link to="/register">
-<button>Register</button>
-</Link>
 
       {/* Statistics Section */}
       <section className="py-16 bg-gradient-to-br from-gray-50 to-green-50">
