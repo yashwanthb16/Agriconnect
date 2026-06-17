@@ -5,44 +5,39 @@ function ProductDetails() {
 
   const products = [
     {
-      id: 1,
-      name: "Tomato",
-      price: "₹25/kg",
-      location: "Salem",
-      farmer: "Ramesh Kumar",
-      phone: "9876543210",
-      quantity: "500 Kg Available",
-      description:
-        "Fresh organic tomatoes harvested directly from the farm.",
-      image:
-        "https://plus.unsplash.com/premium_photo-1661811820259-2575b82101bf?q=80&w=2080&auto=format&fit=crop",
-    },
-    {
-      id: 2,
-      name: "Mango",
-      price: "₹80/kg",
-      location: "Erode",
-      farmer: "Dinesh Kumar",
-      phone: "9876543211",
-      quantity: "200 Kg Available",
-      description:
-        "Fresh organic mangoes harvested directly from the farm.",
-      image:
-        "https://images.unsplash.com/photo-1601493700631-2b16ec4b4716?q=80&w=735&auto=format&fit=crop",
-    },
-    {
-      id: 3,
-      name: "Paddy",
-      price: "₹35/kg",
-      location: "Thanjavur",
-      farmer: "Suresh Kumar",
-      phone: "9876543212",
-      quantity: "800 Kg Available",
-      description:
-        "Fresh organic paddy harvested directly from the farm.",
-      image:
-        "https://images.unsplash.com/photo-1599328580087-15c9dab481f3?q=80&w=1170&auto=format&fit=crop",
-    },
+  id: 1,
+  name: "Tractor",
+  rent: "₹1200/day",
+  location: "Salem",
+  farmer: "Ramesh Kumar",
+  phone: "9876543210",
+  description: "Powerful tractor suitable for ploughing and transportation.",
+  image:
+    "https://preview.redd.it/our-2008-model-75-hp-its-an-indian-tractor-company-v0-8km8r6pm4ud51.jpg?auto=webp&s=21768dc166755e3113f4aca129f96c349e34a464",
+},
+
+{
+  id: 2,
+  name: "Rotavator",
+  rent: "₹800/day",
+  location: "Erode",
+  farmer: "Dinesh Kumar",
+  phone: "9876543211",
+  description: "Rotavator for efficient soil preparation and weed control.",
+  image:
+    "https://www.tractorpool.com/media/2701/8822701/64692424/1780728677.jpg?width=240&height=180&crop=1",
+},
+
+{
+  id: 3,
+  name: "Harvester",
+  rent: "₹5000/day",
+  location: "Thanjavur",
+  farmer: "Suresh Kumar",
+  phone: "9876543212",
+  description: "Combine harvester for quick and efficient harvesting.",
+  image: "https://s3.amazonaws.com/cdn.toolspot.in/site/2022/12/WhatsApp-Image-2022-12-14-at-7.56.32-PM-1.jpeg",
+},
   ];
 
   const product = products.find(
@@ -75,7 +70,7 @@ function ProductDetails() {
           </h1>
 
           <p className="text-3xl font-semibold text-green-600 mb-4">
-            {product.price}
+            {product.rent}
           </p>
 
           <p className="text-lg mb-2">
@@ -84,10 +79,6 @@ function ProductDetails() {
 
           <p className="text-lg mb-2">
             👨‍🌾 <strong>Farmer:</strong> {product.farmer}
-          </p>
-
-          <p className="text-lg mb-2">
-            📦 <strong>Available Quantity:</strong> {product.quantity}
           </p>
 
           <p className="text-lg mb-6">
