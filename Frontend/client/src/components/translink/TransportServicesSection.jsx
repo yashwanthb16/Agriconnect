@@ -9,7 +9,15 @@ const TransportServicesSection = () => {
   const handleRegisterClick = () => {
     if (isAnimating) return;
     setIsAnimating(true);
-    navigate('/transport-dashboard');
+    
+    // Check if user is logged in
+    const user = JSON.parse(localStorage.getItem('user') || 'null');
+    if (user) {
+      navigate('/my-transports');
+    } else {
+      navigate('/transport-dashboard');
+    }
+    
     setTimeout(() => {
       setIsAnimating(false);
     }, 2000);

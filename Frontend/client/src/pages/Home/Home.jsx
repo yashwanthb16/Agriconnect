@@ -1,21 +1,14 @@
 import { Link } from 'react-router-dom';
-import Navbar from "../../components/Navbar/Navbar";
 import Hero from "../../components/Hero/Hero";
 import StatCard from "../../components/StatCard/StatCard";
-
 import Footer from "../../components/Footer/Footer.jsx";
 import TransportServicesSection from "../../components/translink/TransportServicesSection";
 import FeaturedProducts from "../../components/FeaturedProducts/FeaturedProducts"
-
-
-
 import Carousel from "../../components/Carousel/Carousel";
 
 function Home() {
   return (
     <>
-      <Navbar />
-
       <Hero />
 
       
