@@ -1,11 +1,11 @@
 import React, { useState, useRef, useEffect } from 'react';
-
+import API, { registerDriver } from "../Services/transportApi";
 const TransportDashboard = () => {
   // ========== STEP MANAGEMENT ==========
   const [step, setStep] = useState(1);
   const [submitted, setSubmitted] = useState(false);
   const [regId, setRegId] = useState('');
-  
+  const [driverId, setDriverId] = useState(null);
   // ========== OTP STATE ==========
   const [showOtpModal, setShowOtpModal] = useState(false);
   const [otpCode, setOtpCode] = useState(['', '', '', '', '', '']);
@@ -105,6 +105,157 @@ const TransportDashboard = () => {
   const [errors, setErrors] = useState({});
   
   const otpInputRefsEmail = useRef([]);
+
+  const fillRandomDemoData = () => {
+    const randomSuffix = Math.floor(Math.random() * 9000) + 1000;
+    const uniqueEmail = `driver${randomSuffix}@example.com`;
+    const uniqueMobile = `9${String(Math.floor(Math.random() * 900000000) + 100000000)}`;
+    const uniqueAadhaar = String(Math.floor(Math.random() * 900000000000) + 100000000000);
+    const uniqueLicense = `DL${randomSuffix}${String(Math.floor(Math.random() * 90) + 10)}`;
+    const regNum = `KA0${String(Math.floor(Math.random() * 9) + 1)}AB${String(randomSuffix).slice(0, 4)}`;
+
+    setDriverProfile({
+      fullName: `Demo Driver ${randomSuffix}`,
+      dateOfBirth: '1995-06-15',
+      gender: 'male',
+      mobile: uniqueMobile,
+      email: uniqueEmail,
+      permanentAddress: `House ${randomSuffix}, Demo Street, Bengaluru`,
+      currentAddress: `Flat ${randomSuffix}, Sample Colony, Bengaluru`,
+      nationalId: uniqueAadhaar,
+      nationalIdType: 'aadhaar',
+      licenseNumber: uniqueLicense,
+      licenseIssuingRTO: 'Bengaluru East RTO',
+      licenseIssueDate: '2018-06-15',
+      licenseExpiryDate: '2028-06-15',
+      licenseClass: 'LMV',
+      drivingExperienceYears: '5',
+      criminalHistory: false,
+      criminalDetails: '',
+      medicalFitnessCertificateDate: '2025-06-15',
+      medicalFitnessUpload: null,
+      profilePhoto: null,
+    });
+
+    setVehicleDetails({
+      vehicleType: 'auto',
+      make: 'TVS',
+      model: 'Jupiter',
+      yearOfManufacture: '2020',
+      color: 'White',
+      seatingCapacity: '4',
+      fuelType: 'CNG',
+      registrationNumber: regNum,
+      vinChassis: `VIN${randomSuffix}${String(Math.floor(Math.random() * 900000) + 100000)}`,
+      rcNumber: `RC${randomSuffix}`,
+      rcIssueDate: '2020-06-15',
+      rcIssuingRTO: 'Bengaluru East RTO',
+      insurancePolicyNumber: `INS${randomSuffix}`,
+      insuranceExpiryDate: '2026-06-15',
+      pucCertificateNumber: `PUC${randomSuffix}`,
+      pucExpiryDate: '2026-06-15',
+      certificateOfFitnessNumber: `FIT${randomSuffix}`,
+      certificateOfFitnessExpiry: '2026-06-15',
+      permitNumber: `PRMT${randomSuffix}`,
+      permitType: 'City Permit',
+      permitExpiryDate: '2027-06-15',
+      taxTokenPaid: true,
+      noUnpaidFines: true,
+    });
+
+    setBankDetails({
+      accountHolderName: `Demo Driver ${randomSuffix}`,
+      accountNumber: String(Math.floor(Math.random() * 9000000000) + 1000000000),
+      ifscCode: 'SBIN0001234',
+      bankName: 'State Bank of India',
+    });
+
+    setUploadedFiles({
+      driverLicenseFront: '/uploads/demo-license.jpg',
+      driverLicenseBack: '/uploads/demo-license-back.jpg',
+      identityProof: '/uploads/demo-identity.jpg',
+      profilePhoto: '/uploads/demo-profile.jpg',
+      vehicleRC: '/uploads/demo-rc.jpg',
+      insuranceCertificate: '/uploads/demo-insurance.jpg',
+      pucCertificate: '/uploads/demo-puc.jpg',
+      fitnessCertificate: '/uploads/demo-fitness.jpg',
+      permitCertificate: '/uploads/demo-permit.jpg',
+      medicalFitness: '/uploads/demo-medical.jpg',
+    });
+
+    setCriminalDeclaration(false);
+    setTosAccepted(true);
+    setMobileVerified(true);
+    setEmailVerified(true);
+    setErrors({});
+  };
+
+  useEffect(() => {
+    fillRandomDemoData();
+  }, []);
+
+  const saveStep1 = async () => {
+  try {
+    const payload = {
+      driverProfile,
+      vehicleDetails,
+      bankDetails,
+    };
+
+    const response = await registerDriver(payload);
+    const newDriverId = response.data.data._id;
+    setDriverId(newDriverId);
+
+    return newDriverId;
+  } catch (error) {
+    console.error(error);
+    const backendMessage = error.response?.data?.message;
+    const backendError = error.response?.data?.error;
+    alert(
+      backendMessage
+        ? `${backendMessage}${backendError ? `: ${backendError}` : ''}`
+        : "Failed to save driver"
+    );
+    return null;
+  }
+};
+
+  const saveRegistrationData = async () => {
+    try {
+      let activeDriverId = driverId;
+      if (!activeDriverId) {
+        activeDriverId = await saveStep1();
+      }
+
+      if (!activeDriverId) return false;
+
+      await API.put(`/${activeDriverId}`, {
+        driverProfile,
+        vehicleDetails,
+        bankDetails,
+        declaration: {
+          criminalHistory: driverProfile.criminalHistory,
+          criminalDetails: driverProfile.criminalDetails,
+          medicalFitnessCertificateDate: driverProfile.medicalFitnessCertificateDate,
+          medicalFitnessUpload: driverProfile.medicalFitnessUpload,
+        },
+        verification: {
+          mobileVerified,
+          emailVerified,
+        },
+      });
+
+      setDriverId(activeDriverId);
+      return true;
+    } catch (error) {
+      console.error(error);
+      alert(
+        error.response?.data?.message ||
+        "Failed to save registration details"
+      );
+      return false;
+    }
+  };
 
   // ========== HELPER FUNCTIONS ==========
   const calculateAge = (dob) => {
@@ -280,14 +431,17 @@ const TransportDashboard = () => {
   };
   
   // ========== NAVIGATION ==========
-  const nextStep = () => {
+  const nextStep = async () => { 
     let valid = false;
     if (step === 1) valid = validateStep1();
     if (step === 2) valid = validateStep2();
     if (step === 3) valid = validateStep3();
     if (valid && step < 4) {
-      setStep(step + 1);
-      setErrors({});
+      const saved = await saveRegistrationData();
+      if (saved) {
+        setStep(step + 1);
+        setErrors({});
+      }
     }
   };
   
@@ -298,13 +452,51 @@ const TransportDashboard = () => {
     }
   };
   
-  const submitForm = () => {
+  const submitForm = async () => {
+  try {
     if (!validateStep3()) return;
-    const newRegId = 'DRV-' + Math.random().toString(36).substring(2, 10).toUpperCase();
-    setRegId(newRegId);
+
+    const response = await API.post("/register", {
+      driverProfile,
+      vehicleDetails,
+      bankDetails,
+    });
+
+    setDriverId(response.data.data._id);
+
+    alert("Driver Registration Saved");
+
+    setStep(5);
+  } catch (error) {
+    console.log(error);
+
+    alert(
+      error.response?.data?.message ||
+      "Registration Failed"
+    );
+  }
+};
+
+const finalSubmit = async () => {
+  try {
+    const saved = await saveRegistrationData();
+    if (!saved || !driverId) return;
+
+    const response = await API.put(
+      `/submit/${driverId}`
+    );
+
+    setRegId(response.data.registrationId);
     setSubmitted(true);
+
+  } catch (error) {
+    alert(
+      error.response?.data?.message ||
+      "Submission failed"
+    );
+  }
   };
-  
+
   const resetForm = () => {
     setStep(1);
     setSubmitted(false);
@@ -340,45 +532,127 @@ const TransportDashboard = () => {
   
   // ========== OTP FUNCTIONS ==========
   const openMobileOtpModal = () => {
-    const mob = driverProfile.mobile.replace(/\s/g, '');
-    if (!/^[6-9]\d{9}$/.test(mob)) {
+    const mobileInput = (driverProfile.mobile || '').trim();
+    const normalizedMobile = mobileInput.replace(/[^\d+]/g, '');
+    const digitsOnly = normalizedMobile.replace(/\D/g, '');
+    const isValidLocal = /^[6-9]\d{9}$/.test(digitsOnly);
+    const isValidInternational = /^\+\d{8,15}$/.test(normalizedMobile);
+
+    if (!isValidLocal && !isValidInternational) {
       setErrors(prev => ({ ...prev, mobile: 'Enter valid mobile number first' }));
       return;
     }
-    setOtpCode(['', '', '', '', '', '']);
-    setShowOtpModal(true);
-    setTimeout(() => otpInputRefs.current[0]?.focus(), 100);
+
+    const ensureAndSend = async () => {
+      try {
+        let activeDriverId = driverId;
+        if (!activeDriverId) {
+          activeDriverId = await saveStep1();
+          if (!activeDriverId) return;
+        }
+
+        const response = await API.post(`/send-mobile-otp/${activeDriverId}`, { mobile: normalizedMobile });
+        setDriverId(activeDriverId);
+
+        setOtpCode(['', '', '', '', '', '']);
+        setShowOtpModal(true);
+        setTimeout(() => otpInputRefs.current[0]?.focus(), 100);
+        alert(response.data.message || `OTP sent to ${normalizedMobile}`);
+      } catch (err) {
+        console.error(err);
+        alert(err.response?.data?.message || 'Failed to send OTP');
+      }
+    };
+
+    ensureAndSend();
   };
   
   const openEmailOtpModal = () => {
-    if (!driverProfile.email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(driverProfile.email)) {
+    const email = driverProfile.email;
+    if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
       setErrors(prev => ({ ...prev, email: 'Enter valid email first' }));
       return;
     }
-    setEmailOtpSent(true);
-    setOtpCode(['', '', '', '', '', '']);
-    alert(`Demo: OTP sent to ${driverProfile.email}`);
+
+    const ensureAndSendEmail = async () => {
+      try {
+        let activeDriverId = driverId;
+        if (!activeDriverId) {
+          activeDriverId = await saveStep1();
+          if (!activeDriverId) return;
+        }
+
+        const response = await API.post(`/send-email-otp/${activeDriverId}`, { email });
+        setDriverId(activeDriverId);
+        setEmailOtpSent(true);
+        setOtpCode(['', '', '', '', '', '']);
+        alert(`OTP sent to ${email} (${response.data.message})`);
+      } catch (err) {
+        console.error(err);
+        alert(err.response?.data?.message || 'Failed to send email OTP');
+      }
+    };
+
+    ensureAndSendEmail();
   };
   
-  const confirmMobileOtp = () => {
-    const code = otpCode.join('');
-    if (code.length === 6) {
+  const confirmMobileOtp = async () => {
+  try {
+    const code = otpCode.join("");
+
+    if (code.length !== 6) {
+      alert("Enter valid OTP");
+      return;
+    }
+
+    const response = await API.put(
+      `/verify-mobile/${driverId}`,
+      {
+        otp: code,
+      }
+    );
+
+    if (response.data?.success) {
       setMobileVerified(true);
       setShowOtpModal(false);
+      alert(response.data.message || 'Mobile verified successfully');
     } else {
-      alert('Please enter all 6 digits');
+      alert(response.data?.message || 'OTP Verification Failed');
     }
-  };
+  } catch (error) {
+    console.error(error);
+    alert(error.response?.data?.message || "OTP Verification Failed");
+  }
+};
   
-  const confirmEmailOtp = () => {
-    const code = otpCode.join('');
-    if (code.length === 6) {
+const confirmEmailOtp = async () => {
+  try {
+    const code = otpCode.join("");
+
+    if (code.length !== 6) {
+      alert("Enter valid OTP");
+      return;
+    }
+
+    const response = await API.put(
+      `/verify-email/${driverId}`,
+      {
+        otp: code,
+      }
+    );
+
+    if (response.data?.success) {
       setEmailVerified(true);
       setEmailOtpSent(false);
+      alert(response.data.message || 'Email verified successfully');
     } else {
-      alert('Please enter all 6 digits');
+      alert(response.data?.message || 'Email Verification Failed');
     }
-  };
+  } catch (error) {
+    console.error(error);
+    alert(error.response?.data?.message || "Email Verification Failed");
+  }
+};
   
   const handleOtpChange = (index, value, isEmail = false) => {
     if (value.length > 1) return;
@@ -394,19 +668,33 @@ const TransportDashboard = () => {
     }
   };
   
-  const handleFileUpload = (key, file) => {
+const handleFileUpload = async (key, file) => {
+  try {
     if (!file) return;
-    const allowed = ['application/pdf', 'image/jpeg', 'image/png', 'image/jpg'];
-    if (!allowed.includes(file.type)) {
-      alert('Invalid file type. Only PDF, JPG, PNG allowed.');
-      return;
-    }
-    if (file.size > 5 * 1024 * 1024) {
-      alert('File too large. Max 5 MB.');
-      return;
-    }
-    setUploadedFiles(prev => ({ ...prev, [key]: file.name }));
-  };
+
+    const formData = new FormData();
+
+    formData.append("file", file);
+
+    const response = await API.post(
+      `/upload/${driverId}/${key}`,
+      formData,
+      {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      }
+    );
+
+    setUploadedFiles((prev) => ({
+      ...prev,
+      [key]: response.data.fileUrl,
+    }));
+
+  } catch (error) {
+    alert("File Upload Failed");
+  }
+};
   
   // ========== DATA OPTIONS ==========
   const vehicleTypes = ['motorcycle', 'auto', 'taxi', 'car', 'e-rickshaw'];
@@ -455,12 +743,6 @@ const TransportDashboard = () => {
   if (submitted) {
     return (
       <div className="min-h-screen bg-gradient-to-br from-slate-50 to-gray-100">
-        <nav className="bg-slate-900 h-14 flex items-center justify-between px-6 border-b-2 border-teal-600">
-          <div className="flex items-center gap-3">
-            <div className="w-9 h-9 bg-teal-600 rounded-lg flex items-center justify-center text-white">🚕</div>
-            <div><div className="text-white text-sm font-semibold">AgriMove Driver</div></div>
-          </div>
-        </nav>
         <div className="max-w-2xl mx-auto px-4 py-12">
           <div className="bg-white rounded-2xl shadow-xl p-8 text-center">
             <div className="w-20 h-20 bg-emerald-50 rounded-full flex items-center justify-center mx-auto mb-6">
@@ -483,13 +765,23 @@ const TransportDashboard = () => {
   // Main Form
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-50 to-gray-100">
-      <nav className="bg-slate-900 h-14 flex items-center justify-between px-6 border-b-2 border-teal-600">
+      {/* Page Header */}
+      <div className="bg-slate-900 px-6 py-3 border-b-2 border-teal-600 flex items-center justify-between">
         <div className="flex items-center gap-3">
           <div className="w-9 h-9 bg-teal-600 rounded-lg flex items-center justify-center text-white">🚕</div>
           <div><div className="text-white text-sm font-semibold">AgriMove Driver Onboarding</div></div>
         </div>
-        <div className="border border-teal-700 bg-slate-800 text-teal-300 text-xs px-3 py-1.5 rounded-full">Secure Portal</div>
-      </nav>
+        <div className="flex items-center gap-2">
+          <button
+            onClick={fillRandomDemoData}
+            className="border border-teal-600 bg-slate-800 text-teal-300 text-xs px-3 py-1.5 rounded-full hover:bg-slate-700"
+            type="button"
+          >
+            Fill Test Data
+          </button>
+          <div className="border border-teal-700 bg-slate-800 text-teal-300 text-xs px-3 py-1.5 rounded-full">Secure Portal</div>
+        </div>
+      </div>
       
       <div className="max-w-5xl mx-auto px-4 py-8">
         {/* Stepper */}
@@ -779,14 +1071,20 @@ const TransportDashboard = () => {
         <div className="bg-white rounded-xl p-4 flex justify-between items-center mt-6 shadow-sm">
           <div>{step > 1 && <button onClick={prevStep} className="px-5 py-2 border rounded-xl hover:bg-gray-50">← Back</button>}</div>
           <div className="text-xs text-gray-500">Step {step} of 4</div>
-          <div>{step < 4 ? <button onClick={nextStep} className="bg-teal-600 text-white px-6 py-2 rounded-xl hover:bg-teal-700">Continue →</button> : <button onClick={submitForm} className="bg-slate-800 text-white px-6 py-2 rounded-xl hover:bg-slate-900">✉ Submit Application</button>}</div>
+          <div>{step < 4 ? <button onClick={nextStep} className="bg-teal-600 text-white px-6 py-2 rounded-xl hover:bg-teal-700">Continue →</button> : <button
+  onClick={finalSubmit}
+  className="bg-slate-800 text-white px-6 py-2 rounded-xl hover:bg-slate-900"
+>
+  ✉ Submit Application
+</button>}</div>
         </div>
       </div>
       
       {/* OTP Modal */}
       {showOtpModal && (
         <div className="fixed inset-0 bg-black/60 flex items-center justify-center z-50">
-          <div className="bg-white rounded-2xl p-6 w-[380px]">
+          <div className="bg-white rounded-2xl p-6 w-[380px] relative">
+            <button aria-label="close" onClick={() => { setShowOtpModal(false); setOtpCode(['', '', '', '', '', '']); }} className="absolute right-3 top-3 text-gray-500 hover:text-gray-700">✕</button>
             <h3 className="text-lg font-semibold">📱 Verify Mobile</h3>
             <p className="text-sm text-gray-500 mb-4">Enter 6-digit code sent to {driverProfile.mobile}</p>
             <div className="flex gap-2 justify-center mb-4">
@@ -802,7 +1100,8 @@ const TransportDashboard = () => {
       {/* Email OTP Modal */}
       {emailOtpSent && !showOtpModal && (
         <div className="fixed inset-0 bg-black/60 flex items-center justify-center z-50">
-          <div className="bg-white rounded-2xl p-6 w-[380px]">
+          <div className="bg-white rounded-2xl p-6 w-[380px] relative">
+            <button aria-label="close" onClick={() => { setEmailOtpSent(false); setOtpCode(['', '', '', '', '', '']); }} className="absolute right-3 top-3 text-gray-500 hover:text-gray-700">✕</button>
             <h3 className="text-lg font-semibold">📧 Verify Email</h3>
             <p className="text-sm text-gray-500 mb-4">Enter 6-digit code sent to {driverProfile.email}</p>
             <div className="flex gap-2 justify-center mb-4">

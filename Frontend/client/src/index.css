@@ -1,3 +1,185 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+/* ===== GLOBAL DARK MODE ===== */
+:root {
+  --nav-bg: #ffffff;
+  --nav-border: #e5e7eb;
+}
+
+html {
+  transition: background-color 0.3s, color 0.3s;
+}
+
+html.dark {
+  background-color: #0a0f1a;
+  color: #f1f5f9;
+  color-scheme: dark;
+  --nav-bg: #0d1421;
+  --nav-border: #1e2d42;
+}
+
+html.dark body {
+  background-color: #0a0f1a;
+  color: #f1f5f9;
+}
+
+/* Navbar specific dark mode */
+html.dark nav {
+  background-color: #0d1421 !important;
+  border-color: #1e2d42 !important;
+}
+
+html.dark nav .text-green-700 {
+  color: #10b981 !important;
+}
+
+/* Cards, boxes, panels - Dark Navy Theme */
+html.dark .bg-white {
+  background-color: #1a2332 !important;
+  color: #f1f5f9;
+}
+
+html.dark .bg-gray-50 {
+  background-color: #0f1724 !important;
+}
+
+html.dark .bg-gray-100 {
+  background-color: #141e2e !important;
+}
+
+html.dark .bg-gray-200 {
+  background-color: #1e2d42 !important;
+}
+
+html.dark .bg-gray-300 {
+  background-color: #2a3a4f !important;
+}
+
+/* Section backgrounds for pages */
+html.dark .min-h-screen {
+  background-color: #0a0f1a !important;
+}
+
+/* Gradient backgrounds */
+html.dark .from-slate-50 {
+  --tw-gradient-from: #0a0f1a !important;
+  --tw-gradient-to: transparent !important;
+}
+
+html.dark .to-gray-100 {
+  --tw-gradient-to: #0f1724 !important;
+}
+
+html.dark .bg-gradient-to-br {
+  background-image: linear-gradient(to bottom right, #0a0f1a, #0f1724) !important;
+}
+
+/* Text colors */
+html.dark .text-gray-900,
+html.dark .text-gray-800 {
+  color: #f1f5f9 !important;
+}
+
+html.dark .text-gray-700,
+html.dark .text-gray-600 {
+  color: #cbd5e1 !important;
+}
+
+html.dark .text-gray-500,
+html.dark .text-gray-400 {
+  color: #94a3b8 !important;
+}
+
+html.dark .text-gray-300 {
+  color: #64748b !important;
+}
+
+/* Borders */
+html.dark .border,
+html.dark .border-gray-200,
+html.dark .border-gray-300 {
+  border-color: #2d3f5f !important;
+}
+
+html.dark .border-b,
+html.dark .border-t {
+  border-color: #1e2d42 !important;
+}
+
+/* Inputs */
+html.dark input,
+html.dark textarea,
+html.dark select {
+  background-color: #1a2332 !important;
+  color: #f1f5f9 !important;
+  border-color: #2d3f5f !important;
+}
+
+html.dark input:focus,
+html.dark textarea:focus,
+html.dark select:focus {
+  border-color: #10b981 !important;
+  box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.1) !important;
+}
+
+html.dark input::placeholder,
+html.dark textarea::placeholder {
+  color: #64748b !important;
+}
+
+/* Buttons - keep green buttons as-is, adjust gray buttons */
+html.dark .bg-gray-800 {
+  background-color: #2a3a4f !important;
+}
+
+html.dark .bg-gray-800:hover {
+  background-color: #354861 !important;
+}
+
+/* Shadows in dark mode */
+html.dark .shadow-md,
+html.dark .shadow-sm,
+html.dark .shadow-lg,
+html.dark .shadow-xl {
+  box-shadow: 0 4px 20px rgba(0,0,0,0.4) !important;
+}
+
+/* Card-like containers */
+html.dark .rounded-lg,
+html.dark .rounded-xl,
+html.dark .rounded-2xl {
+  border-color: transparent;
+}
+
+/* Progress bars and indicators */
+html.dark .bg-gray-200 {
+  background-color: #1e2d42 !important;
+}
+
+/* Hover states */
+html.dark .hover\:bg-gray-100:hover {
+  background-color: #1e2d42 !important;
+}
+
+html.dark .hover\:bg-gray-200:hover {
+  background-color: #2a3a4f !important;
+}
+
+/* Tables */
+html.dark table {
+  color: #f1f5f9;
+}
+
+html.dark thead {
+  background-color: #141e2e !important;
+}
+
+html.dark tbody tr {
+  border-color: #1e2d42 !important;
+}
+
+html.dark tbody tr:hover {
+  background-color: #1a2332 !important;
+}
