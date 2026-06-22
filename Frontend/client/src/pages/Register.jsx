@@ -113,7 +113,7 @@ function Register() {
     // Real-time validation for touched fields
     if (touched[name]) {
       let newError = '';
-      if (name === 'fullName') newError = validateFullName(value);
+      if (name === 'name') newError = validateFullName(value);
       else if (name === 'email') newError = validateEmail(value);
       else if (name === 'phone') newError = validatePhone(value);
       else if (name === 'userType') newError = validateUserType(value);
@@ -136,7 +136,7 @@ function Register() {
     
     // Validate on blur
     let newError = '';
-    if (name === 'fullName') newError = validateFullName(value);
+    if (name === 'name') newError = validateFullName(value);
     else if (name === 'email') newError = validateEmail(value);
     else if (name === 'phone') newError = validatePhone(value);
     else if (name === 'userType') newError = validateUserType(value);
@@ -150,53 +150,83 @@ function Register() {
   };
 
   const handleSubmit = async (e) => {
-    e.preventDefault();
-    
-    // Mark all fields as touched
-    setTouched({
-      fullName: true,
-      email: true,
-      phone: true,
-      userType: true,
-      password: true,
-      confirmPassword: true,
-    });
-    
-    // Validate all fields
-    const newErrors = {
-      fullName: validateFullName(formData.fullName),
-      email: validateEmail(formData.email),
-      phone: validatePhone(formData.phone),
-      userType: validateUserType(formData.userType),
-      password: validatePassword(formData.password),
-      confirmPassword: validateConfirmPassword(formData.confirmPassword, formData.password),
-    };
+  e.preventDefault();
 
-    setErrors(newErrors);
+  setTouched({
+    fullName: true,
+    email: true,
+    phone: true,
+    userType: true,
+    password: true,
+    confirmPassword: true,
+  });
 
-    // Check if there are any errors
-    const hasErrors = Object.values(newErrors).some((error) => error !== '');
-    
-    if (!hasErrors) {
-      setIsSubmitting(true);
-      
-      // Simulate API call
-      try {
-        // Replace with actual API call
-        await new Promise((resolve) => setTimeout(resolve, 1500));
-        
-        console.log('Registration successful:', formData);
-        
-        // Redirect to login page after successful registration
-        navigate('/login');
-      } catch (error) {
-        console.error('Registration failed:', error);
-        setErrors({ submit: 'Registration failed. Please try again.' });
-      } finally {
-        setIsSubmitting(false);
-      }
-    }
+  const newErrors = {
+    name: validateFullName(formData.fullName),
+    email: validateEmail(formData.email),
+    phone: validatePhone(formData.phone),
+    userType: validateUserType(formData.userType),
+    password: validatePassword(formData.password),
+    confirmPassword: validateConfirmPassword(
+      formData.confirmPassword,
+      formData.password
+    ),
   };
+
+  setErrors(newErrors);
+
+  const hasErrors = Object.values(newErrors).some(
+    (error) => error !== ""
+  );
+
+  if (!hasErrors) {
+    setIsSubmitting(true);
+
+    try {
+      const response = await fetch(
+        "http://localhost:5000/api/auth/register",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+
+          body: JSON.stringify({
+            name: formData.fullName,
+            email: formData.email,
+            phone: formData.phone,
+            userType: formData.userType,
+            password: formData.password,
+          }),
+        }
+      );
+
+      const data = await response.json();
+
+      if (!response.ok) {
+        throw new Error(
+          data.message || "Registration failed"
+        );
+      }
+
+      console.log("Registration successful:", data);
+
+      navigate("/login");
+
+    } catch (error) {
+      console.error("Registration failed:", error);
+
+      setErrors({
+        submit:
+          error.message ||
+          "Registration failed. Please try again.",
+      });
+
+    } finally {
+      setIsSubmitting(false);
+    }
+  }
+};
 
   return (
     <div className="relative min-h-screen flex items-center justify-center px-4 py-12">
