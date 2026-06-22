@@ -1,22 +1,17 @@
 import { Link } from 'react-router-dom';
+import Navbar from "../../components/Navbar/Navbar";
+
 import Hero from "../../components/Hero/Hero";
 import StatCard from "../../components/StatCard/StatCard";
 import Footer from "../../components/Footer/Footer.jsx";
 import TransportServicesSection from "../../components/translink/TransportServicesSection";
-import FeaturedProducts from "../../components/FeaturedProducts/FeaturedProducts"
+import FeaturedProducts from "../../components/FeaturedProducts/FeaturedProducts";
 import Carousel from "../../components/Carousel/Carousel";
 
 function Home() {
   return (
     <>
       <Hero />
-
-      
-
-
-      <Link to="/register">
-<button>Register</button>
-</Link>
 
       {/* Statistics Section */}
       <section className="py-16 bg-gradient-to-br from-gray-50 to-green-50">

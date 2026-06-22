@@ -1,0 +1,14 @@
+Daily Workflow
+
+Before starting work:
+
+git checkout rathi_frontender
+git pull origin main
+
+After finishing work:
+
+git add .
+git commit -m "Your changes"
+git push origin rathi_frontender
+
+Then create/update the Pull Request on GitHub.

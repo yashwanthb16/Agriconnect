@@ -69,6 +69,7 @@ function Navbar() {
             </Link>
           </div>
 
+<<<<<<< HEAD
           {/* Right Side */}
           <div className="flex items-center gap-3">
             <ThemeToggle />
@@ -107,6 +108,18 @@ function Navbar() {
               {pendingBookings}
             </span>
           )}
+=======
+      <div className="flex items-center gap-3">
+        <Link to="/login">
+          <button className="px-5 py-2 bg-white text-green-600 border-2 border-green-600 rounded-lg font-medium hover:bg-green-50 transition-colors">
+            Login
+          </button>
+        </Link>
+        <Link to="/register">
+          <button className="px-5 py-2 bg-green-600 text-white rounded-lg font-medium hover:bg-green-700 transition-colors shadow-md hover:shadow-lg">
+            Register
+          </button>
+>>>>>>> origin/main
         </Link>
       </div>
     </nav>
