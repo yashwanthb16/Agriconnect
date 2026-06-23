@@ -365,8 +365,6 @@ exports.getSharedTrips = async (req, res) => {
     res.status(500).json({ success: false, message: "Error fetching shared trips", error: error.message });
   }
 };
-const Booking = require("../models/Booking");
-const TransportDriver = require("../models/TransportDriver");
 
 // ========== CREATE BOOKING REQUEST ==========
 exports.createBooking = async (req, res) => {
